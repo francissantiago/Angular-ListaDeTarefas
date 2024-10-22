@@ -23,7 +23,7 @@
         margin-left: 10px;
     }
 
-    input [type="checkbox"] {
+    input[type="checkbox"] {
         appearance: none;
         background-color: var(--white);
 
@@ -34,15 +34,12 @@
         border-radius: 50px;
         cursor: pointer;
 
-        &.checkeed {
+        &:checked {
             background: var(--primary);
-            border: none;
         }
     }
 
-    input [type="checkbox"] {}
-
-    input [type="checkbox"]+input[type="text"] {}
-
-
+    input[type="checkbox"]+input[type="text"] {
+        margin: 0;
+    }
 }
