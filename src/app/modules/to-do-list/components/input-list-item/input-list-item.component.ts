@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 // Interfaces
 import { IListItems } from '../../interface/IListItems.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-input-list-item',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './input-list-item.component.html',
   styleUrl: './input-list-item.component.scss'
 })
@@ -30,5 +31,11 @@ export class InputListItemComponent {
 
   public updateItemText(id: string, value: string) {
     return this.outputUpdateItemText.emit({ id, value });
+  }
+
+  @Output() public outputDeleteItemText = new EventEmitter<string>();
+
+  public deleteItemText(id: string) {
+    return this.outputDeleteItemText.emit(id);
   }
 }
