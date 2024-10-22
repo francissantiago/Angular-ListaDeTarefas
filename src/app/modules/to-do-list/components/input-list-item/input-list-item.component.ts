@@ -14,12 +14,21 @@ export class InputListItemComponent {
 
   @Input({ required: true }) public inputListItems: IListItems[] = [];
 
-  @Output() public outputUpdateeItemCheckbox = new EventEmitter<{
+  @Output() public outputUpdateItemCheckbox = new EventEmitter<{
     id: string;
     checked: boolean
   }>();
 
   public updateItemCheckbox(id: string, checked: boolean) {
-    return this.outputUpdateeItemCheckbox.emit({ id, checked });
+    return this.outputUpdateItemCheckbox.emit({ id, checked });
+  }
+
+  @Output() public outputUpdateItemText = new EventEmitter<{
+    id: string;
+    value: string
+  }>();
+
+  public updateItemText(id: string, value: string) {
+    return this.outputUpdateItemText.emit({ id, value });
   }
 }

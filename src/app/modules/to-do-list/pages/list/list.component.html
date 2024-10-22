@@ -16,7 +16,8 @@
     <h2>Pendências</h2>
     <app-input-list-item
         [inputListItems]="listItemsStage('pending')"
-        (outputUpdateeItemCheckbox)="updateItemCheckbox($event)"
+        (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+        (outputUpdateItemText)="updateItemText($event)"
     />
     }
 
@@ -24,7 +25,8 @@
     <h2>Concluídas</h2>
     <app-input-list-item
         [inputListItems]="listItemsStage('completed')"
-        (outputUpdateeItemCheckbox)="updateItemCheckbox($event)"
+        (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+        (outputUpdateItemText)="updateItemText($event)"
     />
     }
 
