@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import Swal from 'sweetalert2';
 
 
 // Components
@@ -93,15 +94,39 @@ export class ListComponent {
   }
 
   public deleteItem(id: string) {
-    this.#setListItems.update((oldValue: IListItems[]) => {
-      return oldValue.filter((res) => res.id !== id);
+    Swal.fire({
+      title: "Tem certeza?",
+      text: "Você não poderá reverter isso!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sim, apague o tiem!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.#setListItems.update((oldValue: IListItems[]) => {
+          return oldValue.filter((res) => res.id !== id);
+        });
+
+        return this.#updateLocalStorage();
+      }
     });
 
-    return this.#updateLocalStorage();
+
   }
 
   public deleteAllItems() {
-    localStorage.removeItem(ELocalStorage.MY_LIST);
-    return this.#setListItems.set(this.#parseItems());
+    Swal.fire({
+      title: "Tem certeza?",
+      text: "Você não poderá reverter isso!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sim, apague tudo!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem(ELocalStorage.MY_LIST);
+        return this.#setListItems.set(this.#parseItems());
+      }
+    });
   }
 }
