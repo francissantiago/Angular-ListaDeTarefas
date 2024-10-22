@@ -8,6 +8,9 @@ import { InputListItemComponent } from '../../components/input-list-item/input-l
 // Interfaces
 import { IListItems } from '../../interface/IListItems.interface';
 
+// Enum
+import { ELocalStorage } from '../../enum/ELocalStorage.enum';
+
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -22,12 +25,19 @@ export class ListComponent {
   public getListItems = this.#setListItems.asReadonly();
 
   #parseItems() {
-    return JSON.parse(localStorage.getItem('@my-list') || '[]');
+    return JSON.parse(localStorage.getItem(ELocalStorage.MY_LIST) || '[]');
+  }
+
+  #updateLocalStorage() {
+    return localStorage.setItem(
+      ELocalStorage.MY_LIST,
+      JSON.stringify(this.#setListItems())
+    );
   }
 
   public getInputAndAddItem(value: IListItems) {
     localStorage.setItem(
-      '@my-list',
+      ELocalStorage.MY_LIST,
       JSON.stringify([...this.#setListItems(), value])
     );
 
@@ -62,10 +72,7 @@ export class ListComponent {
       return oldValue;
     });
 
-    return localStorage.setItem(
-      '@my-list',
-      JSON.stringify(this.#setListItems())
-    );
+    return this.#updateLocalStorage();
   }
 
   public updateItemText(newItem: { id: string, value: string }) {
@@ -82,25 +89,19 @@ export class ListComponent {
       return oldValue;
     });
 
-    return localStorage.setItem(
-      '@my-list',
-      JSON.stringify(this.#setListItems())
-    );
+    return this.#updateLocalStorage();
   }
 
-  public deleteItemText(id: string) {
+  public deleteItem(id: string) {
     this.#setListItems.update((oldValue: IListItems[]) => {
       return oldValue.filter((res) => res.id !== id);
     });
 
-    return localStorage.setItem(
-      '@my-list',
-      JSON.stringify(this.#setListItems())
-    );
+    return this.#updateLocalStorage();
   }
 
   public deleteAllItems() {
-    localStorage.removeItem('@my-list');
+    localStorage.removeItem(ELocalStorage.MY_LIST);
     return this.#setListItems.set(this.#parseItems());
   }
 }
